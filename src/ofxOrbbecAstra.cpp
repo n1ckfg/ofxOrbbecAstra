@@ -127,7 +127,7 @@ void ofxOrbbecAstra::initVideoGrabber(int deviceID) {
 void ofxOrbbecAstra::update(){
 	// See on_frame_ready() for more processing
 	bIsFrameNew = false;
-	astra_temp_update();
+    astra_update();
 
 	if (bUseVideoGrabber && grabber) {
 		grabber->update();

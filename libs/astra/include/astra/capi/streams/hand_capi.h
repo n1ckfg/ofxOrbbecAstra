@@ -1,5 +1,5 @@
 // This file is part of the Orbbec Astra SDK [https://orbbec3d.com]
-// Copyright (c) 2015 Orbbec 3D
+// Copyright (c) 2015-2017 Orbbec 3D
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -37,14 +37,14 @@ ASTRA_API_EX astra_status_t astra_handframe_get_frameindex(astra_handframe_t han
                                                                     astra_frame_index_t* index);
 
 ASTRA_API_EX astra_status_t astra_handframe_get_hand_count(astra_handframe_t handFrame,
-                                                                    size_t* handCount);
+                                                           uint32_t* handCount);
 
 ASTRA_API_EX astra_status_t astra_handframe_copy_hands(astra_handframe_t handFrame,
                                                                 astra_handpoint_t* handPointsDestination);
 
 ASTRA_API_EX astra_status_t astra_handframe_get_shared_hand_array(astra_handframe_t handFrame,
-                                                                           astra_handpoint_t** handpoints,
-                                                                           size_t* handCount);
+                                                                  astra_handpoint_t** handpoints,
+                                                                  uint32_t* handCount);
 
 ASTRA_API_EX astra_status_t astra_handstream_get_include_candidate_points(astra_handstream_t handStream,
                                                                                    bool* includeCandidatePoints);

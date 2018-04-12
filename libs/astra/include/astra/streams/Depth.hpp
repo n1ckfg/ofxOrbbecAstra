@@ -1,5 +1,5 @@
 // This file is part of the Orbbec Astra SDK [https://orbbec3d.com]
-// Copyright (c) 2015 Orbbec 3D
+// Copyright (c) 2015-2017 Orbbec 3D
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -97,9 +97,9 @@ namespace astra {
 
         static const astra_stream_type_t id = ASTRA_STREAM_DEPTH;
 
-        conversion_cache_t depth_to_world_data() const
+        astra_conversion_cache_t depth_to_world_data() const
         {
-            conversion_cache_t data;
+            astra_conversion_cache_t data;
             astra_depthstream_get_depth_to_world_data(depthStream_, &data);
 
             return data;
@@ -116,6 +116,18 @@ namespace astra {
         void enable_registration(bool enable)
         {
             astra_depthstream_set_registration(depthStream_, enable);
+        }
+
+        void serial_number(char *serialnumber, uint32_t length)
+        {
+            astra_depthstream_get_serialnumber(depthStream_, serialnumber, length);
+        }
+
+        std::uint32_t chip_id() const
+        {
+            uint32_t chip_id;
+            astra_depthstream_get_chip_id(depthStream_, &chip_id);
+            return chip_id;
         }
 
         const CoordinateMapper& coordinateMapper() const { return coordinateMapper_; };

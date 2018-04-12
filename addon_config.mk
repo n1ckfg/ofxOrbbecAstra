@@ -5,9 +5,12 @@ meta:
 	ADDON_TAGS = "orbbec" "astra" "depth camera"
 	ADDON_URL = https://github.com/mattfelsen/ofxOrbbecAstra
 
-common:
-	ADDON_INCLUDES = libs/astra/include/
+common:	
+	ADDON_LIBS += libs/astra/lib
 
+linux64:	
+	ADDON_DATA = libs/astra/lib/linux64/*	
+	
 osx:
 	# Only needs to link with these three libs, not any of the Plugins folder
 	ADDON_LIBS  = libs/astra/lib/osx/libastra_core_api.dylib

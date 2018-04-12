@@ -1,5 +1,5 @@
 // This file is part of the Orbbec Astra SDK [https://orbbec3d.com]
-// Copyright (c) 2015 Orbbec 3D
+// Copyright (c) 2015-2017 Orbbec 3D
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -39,11 +39,28 @@ namespace astra {
             ::astra_rgb_pixel_t::b = b;
         }
     };
+    struct RGBAPixel : public astra_rgba_pixel_t
+    {
+        RGBAPixel()
+                : RGBAPixel(0, 0,0,0)
+        {}
+
+        RGBAPixel(std::uint8_t r, std::uint8_t g, std::uint8_t b,std::uint8_t alpha)
+        {
+            ::astra_rgba_pixel_t::r = r;
+            ::astra_rgba_pixel_t::g = g;
+            ::astra_rgba_pixel_t::b = b;
+            ::astra_rgba_pixel_t::alpha = alpha;
+        }
+    };
 
     class ImageStreamMode : private ::astra_imagestream_mode_t
     {
     public:
-        ImageStreamMode() = default;
+        ImageStreamMode()
+         : ImageStreamMode(0, 0, 0, ASTRA_PIXEL_FORMAT_UNKNOWN)
+        {}
+
         ImageStreamMode(std::uint32_t width, std::uint32_t height, std::uint8_t fps, astra_pixel_format_t format)
         {
             set_width(width);
@@ -146,6 +163,13 @@ namespace astra {
             return vFov;
         }
 
+        astra_usb_info_t usb_info()const
+        {
+            astra_usb_info_t usbInfo;
+            astra_imagestream_get_usb_info(imageStream_, &usbInfo);
+            return usbInfo;
+        }
+
         bool mirroring_enabled() const
         {
             bool mirroring = false;
@@ -162,7 +186,7 @@ namespace astra {
         std::vector<ImageStreamMode> available_modes() const
         {
             astra_result_token_t token;
-            std::size_t count = 0;
+            std::uint32_t count = 0;
             astra_imagestream_request_modes(imageStream_, &token, &count);
 
             std::vector<ImageStreamMode> result;
@@ -176,9 +200,18 @@ namespace astra {
             return result;
         }
 
+        ImageStreamMode mode() const
+        {
+            ImageStreamMode mode;
+            astra_imagestream_mode_t* cMode = mode;
+            astra_imagestream_get_mode(imageStream_, cMode);
+            return mode;
+        }
+
         void set_mode(const ImageStreamMode& mode)
         {
-            astra_imagestream_set_mode(imageStream_, mode);
+            const astra_imagestream_mode_t* cMode = mode;
+            astra_imagestream_set_mode(imageStream_, cMode);
         }
 
     private:
@@ -265,7 +298,7 @@ namespace astra {
         astra_frame_index_t frameIndex_;
 
         TDataType* dataPtr_;
-        size_t byteLength_;
+        std::uint32_t byteLength_;
     };
 }
 

@@ -1,5 +1,5 @@
 // This file is part of the Orbbec Astra SDK [https://orbbec3d.com]
-// Copyright (c) 2015 Orbbec 3D
+// Copyright (c) 2015-2017 Orbbec 3D
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 #ifndef ASTRA_PLUGIN_STREAM_BIN_HPP
 #define ASTRA_PLUGIN_STREAM_BIN_HPP
 
+#include <cstdint>
 #include "../capi/astra_types.h"
 #include <astra_core/capi/plugins/astra_plugin.h>
 #include <astra_core/plugins/PluginServiceProxy.hpp>
@@ -29,11 +30,13 @@ namespace astra { namespace plugins {
     public:
         stream_bin(PluginServiceProxy& pluginService,
                    astra_stream_t streamHandle,
-                   size_t dataSize)
+                   const std::uint32_t dataSize)
             : streamHandle_(streamHandle),
-              pluginService_(pluginService)
+              pluginService_(pluginService),
+              bufferSize_(dataSize)
         {
-            size_t dataWrapperSize = dataSize + sizeof(TFrameType);
+            const std::uint32_t dataWrapperSize = dataSize + sizeof(TFrameType);
+
             pluginService_.create_stream_bin(streamHandle,
                                              dataWrapperSize,
                                              &binHandle_,
@@ -45,7 +48,7 @@ namespace astra { namespace plugins {
             pluginService_.destroy_stream_bin(streamHandle_, &binHandle_, &currentBuffer_);
         }
 
-        bool has_connections()
+        bool has_connections() const
         {
             bool hasConnections = false;
             pluginService_.bin_has_connections(binHandle_, &hasConnections);
@@ -58,7 +61,7 @@ namespace astra { namespace plugins {
             pluginService_.cycle_bin_buffers(binHandle_, &currentBuffer_);
         }
 
-        TFrameType* begin_write(size_t frameIndex)
+        TFrameType* begin_write(const std::size_t frameIndex)
         {
             if (locked_)
                 return reinterpret_cast<TFrameType*>(currentBuffer_->data);
@@ -68,7 +71,7 @@ namespace astra { namespace plugins {
             return reinterpret_cast<TFrameType*>(currentBuffer_->data);
         }
 
-        std::pair<astra_frame_t*, TFrameType*> begin_write_ex(size_t frameIndex)
+        std::pair<astra_frame_t*, TFrameType*> begin_write_ex(const std::size_t frameIndex)
         {
             if (locked_)
             {
@@ -101,15 +104,19 @@ namespace astra { namespace plugins {
             pluginService_.link_connection_to_bin(connection, nullptr);
         }
 
+        std::uint32_t size() const
+        {
+            return bufferSize_;
+        }
+
     private:
         astra_stream_t streamHandle_;
-        astra_bin_t binHandle_;
-        size_t bufferSize_{0};
-        astra_frame_t* currentBuffer_{nullptr};
         PluginServiceProxy& pluginService_;
+        std::uint32_t bufferSize_{0};
+        astra_bin_t binHandle_;
+        astra_frame_t* currentBuffer_{nullptr};
         bool locked_{false};
     };
-
 }}
 
 #endif /* ASTRA_PLUGIN_STREAM_BIN_HPP */

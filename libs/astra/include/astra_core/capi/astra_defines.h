@@ -1,5 +1,5 @@
 // This file is part of the Orbbec Astra SDK [https://orbbec3d.com]
-// Copyright (c) 2015 Orbbec 3D
+// Copyright (c) 2015-2017 Orbbec 3D
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,8 +18,8 @@
 #define ASTRA_DEFINES_H
 
 #ifdef  __cplusplus
-# define ASTRA_BEGIN_DECLS  extern "C" {
-# define ASTRA_END_DECLS    }
+# define ASTRA_BEGIN_DECLS extern "C" {
+# define ASTRA_END_DECLS   }
 #else
 # define ASTRA_BEGIN_DECLS
 # define ASTRA_END_DECLS
@@ -30,17 +30,24 @@
 #  define ASTRA_IMPORT __declspec(dllimport)
 #  define ASTRA_PUBLIC
 #  define ASTRA_LOCAL
+#  define ASTRA_CALLBACK __cdecl
 # else
 #  if __GNUC__ >= 4 || defined (__clang__)
 #    define ASTRA_PUBLIC __attribute__ ((visibility ("default")))
 #    define ASTRA_LOCAL  __attribute__ ((visibility ("hidden")))
 #    define ASTRA_EXPORT ASTRA_PUBLIC
 #    define ASTRA_IMPORT
+#   if defined(__x86_64__) || defined(__ANDROID__)
+#    define ASTRA_CALLBACK
+#   else
+#    define ASTRA_CALLBACK __attribute__ ((__cdecl__))
+#   endif
 #  else
 #    define ASTRA_PUBLIC
 #    define ASTRA_LOCAL
 #    define ASTRA_EXPORT
 #    define ASTRA_IMPORT
+#    define ASTRA_CALLBACK
 #  endif
 # endif
 

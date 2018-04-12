@@ -23,6 +23,10 @@ ofxOrbbecAstra::~ofxOrbbecAstra() {
 	astra::terminate();
 }
 
+void ofxOrbbecAstra::setLicenseString(const string& license) {
+    orbbec_body_tracking_set_license(license.c_str());
+}
+
 void ofxOrbbecAstra::setup() {
 	setup("device/default");
 }
@@ -116,6 +120,18 @@ void ofxOrbbecAstra::initHandStream() {
 	reader.stream<astra::HandStream>().start();
 }
 
+
+void ofxOrbbecAstra::initBodyStream() {
+    if (!bSetup) {
+        ofLogWarning("ofxOrbbecAstra") << "Must call setup() before initBodyStream()";
+        return;
+    }
+
+   reader.stream<astra::BodyStream>().start();
+}
+
+
+
 void ofxOrbbecAstra::initVideoGrabber(int deviceID) {
 	bUseVideoGrabber = true;
 
@@ -164,6 +180,7 @@ void ofxOrbbecAstra::on_frame_ready(astra::StreamReader& reader,
 	auto depthFrame = frame.get<astra::DepthFrame>();
 	auto pointFrame = frame.get<astra::PointFrame>();
 	auto handFrame = frame.get<astra::HandFrame>();
+    auto bodyFrame = frame.get<astra::BodyFrame>();
 
 	if (colorFrame.is_valid()) {
 		colorFrame.copy_to((astra::RgbPixel*) colorImage.getPixels().getData());
@@ -208,6 +225,24 @@ void ofxOrbbecAstra::on_frame_ready(astra::StreamReader& reader,
 			}
 		}
 	}
+
+    if (bodyFrame.is_valid()) {
+        jointPositions.clear();
+
+        const auto& bodies = bodyFrame.bodies();
+        size_t id = 0;
+        for (auto& body : bodies)
+        {
+            //const auto& id = body.id();
+            vector<ofVec2f> joints;
+            jointPositions.push_back(joints);
+            for(auto& joint : body.joints())
+            {
+                jointPositions[id].push_back(ofVec2f(joint.depth_position().x,joint.depth_position().y));
+            }
+            id++;
+        }
+    }
 }
 
 void ofxOrbbecAstra::updateDepthLookupTable() {
@@ -255,4 +290,8 @@ unordered_map<int32_t,ofVec2f>& ofxOrbbecAstra::getHandsDepth() {
 
 unordered_map<int32_t,ofVec3f>& ofxOrbbecAstra::getHandsWorld() {
 	return handMapWorld;
+}
+
+vector<vector<ofVec2f>>& ofxOrbbecAstra::getJointPositions() {
+    return jointPositions;
 }

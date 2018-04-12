@@ -22,6 +22,7 @@ public:
 	// "device/sensor1", etc. Otherwise, leave blank.
 	void setup();
 	void setup(const string& uri);
+    void setLicenseString(const string& license);
     
 	void enableDepthImage(bool enable);
 	void enableRegistration(bool useRegistration);
@@ -31,6 +32,7 @@ public:
 	void initDepthStream();
 	void initPointStream();
 	void initHandStream();
+    void initBodyStream();
 	void initVideoGrabber(int deviceID = 0);
 
 	void update();
@@ -50,6 +52,7 @@ public:
 
 	unordered_map<int32_t,ofVec2f>& getHandsDepth();
 	unordered_map<int32_t,ofVec3f>& getHandsWorld();
+    vector<vector<ofVec2f>>& getJointPositions();
 
 protected:
 
@@ -83,5 +86,6 @@ protected:
 
 	unordered_map<int32_t,ofVec2f> handMapDepth;
 	unordered_map<int32_t,ofVec3f> handMapWorld;
+    vector<vector<ofVec2f>> jointPositions;
 
 };

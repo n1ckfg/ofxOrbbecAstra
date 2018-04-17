@@ -16,7 +16,7 @@ class ofxOrbbecAstra : public astra::FrameListener {
 public:
 
 	ofxOrbbecAstra();
-	~ofxOrbbecAstra();
+	~ofxOrbbecAstra();  
 
 	// For multiple cameras, use "device/sensor0",
 	// "device/sensor1", etc. Otherwise, leave blank.
@@ -41,7 +41,14 @@ public:
 	void draw(float x = 0, float y = 0, float w = 0, float h = 0);
 	void drawDepth(float x = 0, float y = 0, float w = 0, float h = 0);
 
-	ofVec3f getWorldCoordinateAt(int x, int y);
+    ofVec2f getJointPosition(int body_id, int joint_id);
+    vector<astra::Joint>& getJointPositions(int body_id);
+    int getNumBodies();
+    int getNumJoints(int body_id);
+    astra::JointType getJointType(int body_id, int joint_id);
+    string getJointName(astra::JointType id);
+
+	ofVec3f getWorldCoordinateAt(int x, int y);    
 
 	unsigned short getNearClip();
 	unsigned short getFarClip();
@@ -50,9 +57,8 @@ public:
 	ofImage& getDepthImage();
 	ofImage& getColorImage();
 
-	unordered_map<int32_t,ofVec2f>& getHandsDepth();
-	unordered_map<int32_t,ofVec3f>& getHandsWorld();
-    vector<vector<ofVec2f>>& getJointPositions();
+    map<int32_t,ofVec2f>& getHandsDepth();
+    map<int32_t,ofVec3f>& getHandsWorld();
 
 protected:
 
@@ -84,8 +90,9 @@ protected:
 	vector<char> depthLookupTable;
 	vector<ofVec3f> cachedCoords;
 
-	unordered_map<int32_t,ofVec2f> handMapDepth;
-	unordered_map<int32_t,ofVec3f> handMapWorld;
-    vector<vector<ofVec2f>> jointPositions;
+    map<int32_t,ofVec2f> handMapDepth;
+    map<int32_t,ofVec3f> handMapWorld;
+    vector<vector<astra::Joint>> joints;
+    size_t numBodies;
 
 };

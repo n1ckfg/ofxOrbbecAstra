@@ -10,6 +10,7 @@ common:
 
 linux64:	
 	ADDON_DATA = libs/astra/lib/linux64/*	
+	ADDON_DLLS_TO_COPY  = libs/astra/lib/linux64/
 	
 osx:
 	# Only needs to link with these three libs, not any of the Plugins folder

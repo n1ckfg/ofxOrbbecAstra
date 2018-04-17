@@ -227,21 +227,25 @@ void ofxOrbbecAstra::on_frame_ready(astra::StreamReader& reader,
 	}
 
     if (bodyFrame.is_valid()) {
-        jointPositions.clear();
+        joints.clear();
 
         const auto& bodies = bodyFrame.bodies();
+        numBodies = bodies.size();
+
         size_t id = 0;
         for (auto& body : bodies)
         {
             //const auto& id = body.id();
-            vector<ofVec2f> joints;
-            jointPositions.push_back(joints);
+            vector<astra::Joint> newjoints;
+            joints.push_back(newjoints);
             for(auto& joint : body.joints())
             {
-                jointPositions[id].push_back(ofVec2f(joint.depth_position().x,joint.depth_position().y));
+                joints[id].push_back(joint);
             }
             id++;
         }
+    } else {
+        numBodies = 0;
     }
 }
 
@@ -264,6 +268,29 @@ ofVec3f ofxOrbbecAstra::getWorldCoordinateAt(int x, int y) {
 	return cachedCoords[int(y) * width + int(x)];
 }
 
+int ofxOrbbecAstra::getNumBodies() {
+    if(numBodies == 0) return 0;
+    return numBodies;
+}
+
+int ofxOrbbecAstra::getNumJoints(int body_id) {
+    if(numBodies == 0) return 0;
+    if(body_id > (numBodies-1)) return 0;
+    return joints.at(body_id).size();
+}
+
+vector<astra::Joint>& ofxOrbbecAstra::getJointPositions(int body_id) {
+    return joints.at(body_id);
+}
+
+ofVec2f ofxOrbbecAstra::getJointPosition(int body_id, int joint_id) {
+    return ofVec2f(joints[body_id][joint_id].depth_position().x,joints[body_id][joint_id].depth_position().y);
+}
+
+astra::JointType ofxOrbbecAstra::getJointType(int body_id, int joint_id) {
+    return joints[body_id][joint_id].type();
+}
+
 unsigned short ofxOrbbecAstra::getNearClip() {
 	return nearClip;
 }
@@ -284,14 +311,57 @@ ofImage& ofxOrbbecAstra::getColorImage() {
 	return colorImage;
 }
 
-unordered_map<int32_t,ofVec2f>& ofxOrbbecAstra::getHandsDepth() {
+map<int32_t,ofVec2f>& ofxOrbbecAstra::getHandsDepth() {
 	return handMapDepth;
 }
 
-unordered_map<int32_t,ofVec3f>& ofxOrbbecAstra::getHandsWorld() {
+map<int32_t,ofVec3f>& ofxOrbbecAstra::getHandsWorld() {
 	return handMapWorld;
 }
 
-vector<vector<ofVec2f>>& ofxOrbbecAstra::getJointPositions() {
-    return jointPositions;
+string ofxOrbbecAstra::getJointName(astra::JointType id) {
+    switch(static_cast<int>(id))
+    {
+        case 0:
+            return "Head";
+        case 1:
+            return "ShoulderSpine";
+        case 2:
+            return "LeftShoulder";
+        case 3:
+            return "LeftElbow";
+        case 4:
+            return "LeftHand";
+        case 5:
+            return "RightShoulder";
+        case 6:
+            return "RightElbow";
+        case 7:
+            return "RightHand";
+        case 8:
+            return "MidSpine";
+        case 9:
+            return "BaseSpine";
+        case 10:
+            return "LeftHip";
+        case 11:
+            return "LeftKnee";
+        case 12:
+            return "LeftFoot";
+        case 13:
+            return "RightHip";
+        case 14:
+            return "RightKnee";
+        case 15:
+            return "RightFoot";
+        case 16:
+            return "LeftWrist";
+        case 17:
+            return "RightWrist";
+        case 18:
+            return "Neck";
+        case 255:
+        default:
+            return "Unknown";
+    }
 }

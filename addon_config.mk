@@ -22,4 +22,6 @@ osx:
 	# available for loading at runtime, so copy them into the bin folder,
 	# maintaining the folder structure
 	ADDON_DLLS_TO_COPY  = libs/astra/lib/osx/
-
+	
+vs:	
+	ADDON_DLLS_TO_COPY  = dlls_to_copy

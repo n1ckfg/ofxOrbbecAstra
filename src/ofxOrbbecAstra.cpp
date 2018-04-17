@@ -60,9 +60,9 @@ void ofxOrbbecAstra::enableRegistration(bool useRegistration) {
 	reader.stream<astra::DepthStream>().enable_registration(useRegistration);
 }
 
-void ofxOrbbecAstra::setDepthClipping(unsigned short near, unsigned short far) {
-	nearClip = near;
-	farClip = far;
+void ofxOrbbecAstra::setDepthClipping(unsigned short _near, unsigned short _far) {
+	nearClip = _near;
+	farClip = _far;
 	updateDepthLookupTable();
 }
 

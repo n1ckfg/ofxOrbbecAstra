@@ -24,7 +24,9 @@ ofxOrbbecAstra::~ofxOrbbecAstra() {
 }
 
 void ofxOrbbecAstra::setLicenseString(const string& license) {
+    #ifndef TARGET_OSX
     orbbec_body_tracking_set_license(license.c_str());
+    #endif
 }
 
 void ofxOrbbecAstra::setup() {
@@ -126,8 +128,9 @@ void ofxOrbbecAstra::initBodyStream() {
         ofLogWarning("ofxOrbbecAstra") << "Must call setup() before initBodyStream()";
         return;
     }
-
+#ifndef TARGET_OSX
    reader.stream<astra::BodyStream>().start();
+#endif
 }
 
 
@@ -143,7 +146,11 @@ void ofxOrbbecAstra::initVideoGrabber(int deviceID) {
 void ofxOrbbecAstra::update(){
 	// See on_frame_ready() for more processing
 	bIsFrameNew = false;
+#ifndef TARGET_OSX
     astra_update();
+#else
+    astra_temp_update();
+#endif
 
 	if (bUseVideoGrabber && grabber) {
 		grabber->update();
@@ -180,8 +187,10 @@ void ofxOrbbecAstra::on_frame_ready(astra::StreamReader& reader,
 	auto depthFrame = frame.get<astra::DepthFrame>();
 	auto pointFrame = frame.get<astra::PointFrame>();
 	auto handFrame = frame.get<astra::HandFrame>();
+#ifndef TARGET_OSX
     auto bodyFrame = frame.get<astra::BodyFrame>();
-
+#endif
+    
 	if (colorFrame.is_valid()) {
 		colorFrame.copy_to((astra::RgbPixel*) colorImage.getPixels().getData());
 		colorImage.update();
@@ -226,6 +235,7 @@ void ofxOrbbecAstra::on_frame_ready(astra::StreamReader& reader,
 		}
 	}
 
+#ifndef TARGET_OSX
     if (bodyFrame.is_valid()) {
         joints.clear();
 
@@ -247,6 +257,7 @@ void ofxOrbbecAstra::on_frame_ready(astra::StreamReader& reader,
     } else {
         numBodies = 0;
     }
+#endif
 }
 
 void ofxOrbbecAstra::updateDepthLookupTable() {
@@ -268,6 +279,7 @@ ofVec3f ofxOrbbecAstra::getWorldCoordinateAt(int x, int y) {
 	return cachedCoords[int(y) * width + int(x)];
 }
 
+#ifndef TARGET_OSX
 int ofxOrbbecAstra::getNumBodies() {
     if(numBodies == 0) return 0;
     return numBodies;
@@ -289,34 +301,6 @@ ofVec2f ofxOrbbecAstra::getJointPosition(int body_id, int joint_id) {
 
 astra::JointType ofxOrbbecAstra::getJointType(int body_id, int joint_id) {
     return joints[body_id][joint_id].type();
-}
-
-unsigned short ofxOrbbecAstra::getNearClip() {
-	return nearClip;
-}
-
-unsigned short ofxOrbbecAstra::getFarClip() {
-	return farClip;
-}
-
-ofShortPixels& ofxOrbbecAstra::getRawDepth() {
-	return depthPixels;
-}
-
-ofImage& ofxOrbbecAstra::getDepthImage() {
-	return depthImage;
-}
-
-ofImage& ofxOrbbecAstra::getColorImage() {
-	return colorImage;
-}
-
-map<int32_t,ofVec2f>& ofxOrbbecAstra::getHandsDepth() {
-	return handMapDepth;
-}
-
-map<int32_t,ofVec3f>& ofxOrbbecAstra::getHandsWorld() {
-	return handMapWorld;
 }
 
 string ofxOrbbecAstra::getJointName(astra::JointType id) {
@@ -364,4 +348,34 @@ string ofxOrbbecAstra::getJointName(astra::JointType id) {
         default:
             return "Unknown";
     }
+}
+
+#endif
+
+unsigned short ofxOrbbecAstra::getNearClip() {
+	return nearClip;
+}
+
+unsigned short ofxOrbbecAstra::getFarClip() {
+	return farClip;
+}
+
+ofShortPixels& ofxOrbbecAstra::getRawDepth() {
+	return depthPixels;
+}
+
+ofImage& ofxOrbbecAstra::getDepthImage() {
+	return depthImage;
+}
+
+ofImage& ofxOrbbecAstra::getColorImage() {
+	return colorImage;
+}
+
+map<int32_t,ofVec2f>& ofxOrbbecAstra::getHandsDepth() {
+	return handMapDepth;
+}
+
+map<int32_t,ofVec3f>& ofxOrbbecAstra::getHandsWorld() {
+	return handMapWorld;
 }

@@ -41,13 +41,15 @@ public:
 	void draw(float x = 0, float y = 0, float w = 0, float h = 0);
 	void drawDepth(float x = 0, float y = 0, float w = 0, float h = 0);
 
+#ifndef TARGET_OSX
     ofVec2f getJointPosition(int body_id, int joint_id);
     vector<astra::Joint>& getJointPositions(int body_id);
     int getNumBodies();
     int getNumJoints(int body_id);
     astra::JointType getJointType(int body_id, int joint_id);
     string getJointName(astra::JointType id);
-
+#endif
+    
 	ofVec3f getWorldCoordinateAt(int x, int y);    
 
 	unsigned short getNearClip();
@@ -92,7 +94,10 @@ protected:
 
     map<int32_t,ofVec2f> handMapDepth;
     map<int32_t,ofVec3f> handMapWorld;
+
+#ifndef TARGET_OSX
     vector<vector<astra::Joint>> joints;
     size_t numBodies;
+#endif
 
 };

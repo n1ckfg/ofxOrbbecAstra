@@ -10,6 +10,7 @@
 
 #include "ofMain.h"
 #include <astra/astra.hpp>
+#include <astra/capi/astra.h>
 
 class ofxOrbbecAstra : public astra::FrameListener {
 
@@ -79,6 +80,7 @@ protected:
 	bool bDepthImageEnabled;
 	unsigned short nearClip;
 	unsigned short farClip;
+	int maxDepth;
 
 	ofShortPixels depthPixels;
 	ofImage depthImage;

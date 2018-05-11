@@ -13,6 +13,7 @@ ofxOrbbecAstra::ofxOrbbecAstra() {
 	height = 480;
 	nearClip = 300;
 	farClip = 1800;
+	maxDepth = 8000;
 
 	bSetup = false;
 	bIsFrameNew = false;
@@ -40,7 +41,17 @@ void ofxOrbbecAstra::setup(const string& uri) {
 	cachedCoords.resize(width * height);
 	updateDepthLookupTable();
 
-	astra::initialize();
+	astra_status_t status = astra::initialize();
+	if (status != ASTRA_STATUS_SUCCESS) {
+		ofLogError() << "Failed to initialize Astra camera, status id:  " << status;
+	}
+	else {
+		astra_version_info_t info;
+		astra_status_t s = astra_version(&info);
+		ofLogNotice() << "Astra SDK successfully initialized.";
+		ofLogNotice() << "Astra SDK version: " << info.friendlyVersionString;
+	}
+
 
 	streamset = astra::StreamSet(uri.c_str());
 	reader = astra::StreamReader(streamset.create_reader());
@@ -203,6 +214,7 @@ void ofxOrbbecAstra::on_frame_ready(astra::StreamReader& reader,
 			// TODO do this with a shader so it's fast?
 			for (int i = 0; i < depthPixels.size(); i++) {
 				short depth = depthPixels.getColor(i).r;
+				depth = ofClamp(depth, 0, maxDepth-1);
 				float val = depthLookupTable[depth];
 				depthImage.setColor(i, ofColor(val));
 			}
@@ -262,7 +274,6 @@ void ofxOrbbecAstra::on_frame_ready(astra::StreamReader& reader,
 
 void ofxOrbbecAstra::updateDepthLookupTable() {
 	// From product specs, range is 8m
-	int maxDepth = 8000;
 	depthLookupTable.resize(maxDepth);
 
 	// Depth values of 0 should be discarded, so set the LUT value to 0 as well

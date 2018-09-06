@@ -1,18 +1,9 @@
-//
-//  ofApp.cpp
-//  example
-//
-//  Created by Pierre Proske on 12/04/17.
-//
-//
-
 #include "ofApp.h"
 
 void ofApp::setup(){
 	ofBackground(0);
     ofSetWindowShape(1280, 960);
 	ofSetVerticalSync(true);
-
 
 	astra.setup();
    // astra.setLicenseString("<INSERT LICENSE KEY HERE>");
@@ -27,7 +18,6 @@ void ofApp::update(){
 	ofSetWindowTitle(ofToString(ofGetFrameRate()));
 
 	astra.update();
-
 }
 
 void ofApp::draw(){

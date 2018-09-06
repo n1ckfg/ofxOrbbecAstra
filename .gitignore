@@ -73,12 +73,8 @@ xcuserdata
 *.aps
 ipch/
 *.db
-*.sln
-*.vcxproj
 *.exe
 *.tlog
-*.vcxproj.user
-*.filters
 *.log
 *.res
 icon.rc

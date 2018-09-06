@@ -6,19 +6,20 @@ Currently using the 2.0.9 Beta3d SDK
 
 ## Setup
 
-
 The Astra SDK is bundled in the `libs` folder and does not require a separate download or installation.
 
 ### Linux
-
-Copy all files from the `libs/astra/lib/linux64/` folder into the `bin\libs` folder. Create the `bin\libs` folder if it does not exist.
-
+Use the Project manager to create a project that uses this addon.
+Add this line to your qtCreator .qbs file: `cpp.rpaths: ["./libs"]`
+Create the `bin\libs` folder if it does not exist.
+Copy all files from the `libs/astra/lib/linux64/` folder into the `bin\libs` folder. 
 
 ### Windows
-
+Use the Project manager to create a project that uses this addon.
 
 ### Mac OS
-
+Use the Project manager to create a project that uses this addon.
+Edit the XCode project settings according to the two screnshots in the `docs` folder of this repository
 
 ## Support
 

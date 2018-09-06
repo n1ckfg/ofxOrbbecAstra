@@ -19,5 +19,6 @@ This has been tested with the following setup:
 - Ubuntu 16.04
 - Orbbec Astra camera
 
-Windows support hopefully coming soon. The libs from the Win32 and x64 SDKs are included, but I haven't had a chance to test this.
+## Sample Application
+https://github.com/pierrep/OrbecAstraBodyTracker
 

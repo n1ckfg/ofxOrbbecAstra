@@ -11,7 +11,7 @@ The Astra SDK is bundled in the `libs` folder and does not require a separate do
 
 ### Linux
 
-Copy all files from the `libs/astra/lib/linux64/` folder into the `bin\libs` folder. Create the 'bin\libs' folder if it does not exist.
+Copy all files from the `libs/astra/lib/linux64/` folder into the `bin\libs` folder. Create the `bin\libs` folder if it does not exist.
 
 
 ### Windows

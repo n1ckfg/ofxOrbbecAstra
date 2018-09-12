@@ -1,5 +1,5 @@
 // This file is part of the Orbbec Astra SDK [https://orbbec3d.com]
-// Copyright (c) 2015-2017 Orbbec 3D
+// Copyright (c) 2015 Orbbec 3D
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -122,9 +122,9 @@ namespace astra {
                 astra_reader_destroy(&reader_);
             }
 
-            static void ASTRA_CALLBACK frame_ready_thunk(void* clientTag,
-                                                      astra_reader_t reader,
-                                                      astra_reader_frame_t frame)
+            static void frame_ready_thunk(void* clientTag,
+                                          astra_reader_t reader,
+                                          astra_reader_frame_t frame)
             {
                 ReaderRef* self = static_cast<ReaderRef*>(clientTag);
                 self->notify_listeners(frame);

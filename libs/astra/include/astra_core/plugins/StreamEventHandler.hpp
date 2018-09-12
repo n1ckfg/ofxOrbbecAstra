@@ -1,5 +1,5 @@
 // This file is part of the Orbbec Astra SDK [https://orbbec3d.com]
-// Copyright (c) 2015-2017 Orbbec 3D
+// Copyright (c) 2015 Orbbec 3D
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@
 #define ASTRA_STREAM_EVENT_HANDLER_HPP
 
 #include <astra_core/astra_core.hpp>
-#include <cstdint>
 
 namespace astra { namespace plugins {
 
@@ -41,32 +40,23 @@ namespace astra { namespace plugins {
         virtual void on_connection_stopped(astra::plugins::stream* stream,
                                            astra_streamconnection_t connection) {}
 
-        virtual astra_status_t on_set_parameter(astra::plugins::stream* stream,
+        virtual void on_set_parameter(astra::plugins::stream* stream,
                                       astra_streamconnection_t connection,
                                       astra_parameter_id id,
-                                      std::uint32_t inByteLength,
-                                      astra_parameter_data_t inData) 
-        {
-            return ASTRA_STATUS_SUCCESS;
-        }
+                                      size_t inByteLength,
+                                      astra_parameter_data_t inData) {}
 
-        virtual astra_status_t on_get_parameter(astra::plugins::stream* stream,
+        virtual void on_get_parameter(astra::plugins::stream* stream,
                                       astra_streamconnection_t connection,
                                       astra_parameter_id id,
-                                      astra_parameter_bin_t& parameterBin) 
-        {
-            return ASTRA_STATUS_SUCCESS;
-        }
+                                      astra_parameter_bin_t& parameterBin) {}
 
-        virtual astra_status_t on_invoke(astra::plugins::stream* stream,
+        virtual void on_invoke(astra::plugins::stream* stream,
                                astra_streamconnection_t connection,
                                astra_command_id commandId,
-                               std::uint32_t inByteLength,
+                               size_t inByteLength,
                                astra_parameter_data_t inData,
-                               astra_parameter_bin_t& parameterBin) 
-        {
-            return ASTRA_STATUS_SUCCESS;
-        }
+                               astra_parameter_bin_t& parameterBin) {};
     };
 
 }}  // astra::plugins

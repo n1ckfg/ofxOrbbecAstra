@@ -1,5 +1,5 @@
 // This file is part of the Orbbec Astra SDK [https://orbbec3d.com]
-// Copyright (c) 2015-2017 Orbbec 3D
+// Copyright (c) 2015 Orbbec 3D
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,20 +14,13 @@
 // limitations under the License.
 //
 // Be excellent to each other.
-#ifndef BODY_PARAMETERS_H
-#define BODY_PARAMETERS_H
+#ifndef SKELETON_PARAMETERS_H
+#define SKELETON_PARAMETERS_H
 
-enum {
-    ASTRA_PARAMETER_BODY_DEFAULT_BODY_FEATURES = 1,
+enum
+{
+    ASTRA_PARAMETER_SKELETON_Z_MIN = 100,
+    ASTRA_PARAMETER_SKELETON_Z_MAX = 101
 };
 
-enum {
-    ASTRA_COMMAND_GET_BODY_FEATURES = 1,
-    ASTRA_COMMAND_SET_BODY_FEATURES = 2,
-};
-
-enum {
-    ORBBEC_BODY_TRACKING_EVENT_SET_LICENSE = 1001
-};
-
-#endif /* BODY_PARAMETERS_H */
+#endif /* SKELETON_PARAMETERS_H */

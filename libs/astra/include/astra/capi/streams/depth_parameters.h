@@ -1,5 +1,5 @@
 // This file is part of the Orbbec Astra SDK [https://orbbec3d.com]
-// Copyright (c) 2015-2017 Orbbec 3D
+// Copyright (c) 2015 Orbbec 3D
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,9 +20,7 @@
 enum
 {
     ASTRA_PARAMETER_DEPTH_CONVERSION_CACHE = 100,
-    ASTRA_PARAMETER_DEPTH_REGISTRATION = 101,
-    ASTRA_PARAMETER_DEPTH_SERIAL_NUMBER = 102,
-    ASTRA_PARAMETER_DEPTH_CHIP_ID = 103
+    ASTRA_PARAMETER_DEPTH_REGISTRATION = 101
 };
 
 #endif /* DEPTH_PARAMETERS_H */

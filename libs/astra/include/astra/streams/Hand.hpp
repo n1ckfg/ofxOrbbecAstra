@@ -1,5 +1,5 @@
 // This file is part of the Orbbec Astra SDK [https://orbbec3d.com]
-// Copyright (c) 2015-2017 Orbbec 3D
+// Copyright (c) 2015 Orbbec 3D
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -125,7 +125,7 @@ namespace astra {
             {
                 astra_handframe_get_frameindex(handFrame_, &frameIndex_);
 
-                std::uint32_t maxHandCount;
+                size_t maxHandCount;
                 astra_handframe_get_hand_count(handFrame_, &maxHandCount);
 
                 handPoints_.reserve(maxHandCount);
@@ -150,11 +150,7 @@ namespace astra {
             return handPoints_;
         }
 
-        astra_frame_index_t frame_index() const
-        {
-            throw_if_invalid_frame();
-            return frameIndex_;
-        }
+        astra_frame_index_t frame_index() { throw_if_invalid_frame(); return frameIndex_; }
 
     private:
         void throw_if_invalid_frame() const
@@ -168,11 +164,11 @@ namespace astra {
             handPointsInitialized_ = true;
 
             astra_handpoint_t* handPtr;
-            std::uint32_t maxHandCount;
+            size_t maxHandCount;
 
             astra_handframe_get_shared_hand_array(handFrame_, &handPtr, &maxHandCount);
 
-            for (size_t i = 0; i < maxHandCount; ++i, ++handPtr)
+            for (int i = 0; i < maxHandCount; ++i, ++handPtr)
             {
                 astra_handpoint_t& p = *handPtr;
                 if (p.status != astra_handstatus_t::HAND_STATUS_NOTTRACKING)

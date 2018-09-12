@@ -4,16 +4,11 @@
 
 #include "astra_defines.h"
 #include "astra_types.h"
-#include "astra_core_version.h"
 
 ASTRA_BEGIN_DECLS
 
 ASTRA_API astra_status_t astra_initialize();
 ASTRA_API astra_status_t astra_terminate();
-
-ASTRA_API astra_status_t astra_notify_plugin_event(astra_event_id id,
-                                                   const void* data,
-                                                   uint32_t dataSize);
 
 ASTRA_API astra_status_t astra_streamset_open(const char* connectionString,
                                               astra_streamsetconnection_t* streamSet);
@@ -57,27 +52,27 @@ ASTRA_API astra_status_t astra_reader_get_frame(astra_reader_frame_t frame,
 
 ASTRA_API astra_status_t astra_stream_set_parameter(astra_streamconnection_t connection,
                                                     astra_parameter_id parameterId,
-                                                    uint32_t inByteLength,
+                                                    size_t inByteLength,
                                                     astra_parameter_data_t inData);
 
 ASTRA_API astra_status_t astra_stream_get_parameter(astra_streamconnection_t connection,
                                                     astra_parameter_id parameterId,
-                                                    uint32_t* resultByteLength,
+                                                    size_t* resultByteLength,
                                                     astra_result_token_t* token);
 
 ASTRA_API astra_status_t astra_stream_get_result(astra_streamconnection_t connection,
                                                  astra_result_token_t token,
-                                                 uint32_t dataByteLength,
+                                                 size_t dataByteLength,
                                                  astra_parameter_data_t dataDestination);
 
 ASTRA_API astra_status_t astra_stream_invoke(astra_streamconnection_t connection,
                                              astra_command_id commandId,
-                                             uint32_t inByteLength,
+                                             size_t inByteLength,
                                              astra_parameter_data_t inData,
-                                             uint32_t* resultByteLength,
+                                             size_t* resultByteLength,
                                              astra_result_token_t* token);
 
-ASTRA_API astra_status_t astra_update();
+ASTRA_API astra_status_t astra_temp_update();
 
 ASTRA_END_DECLS
 

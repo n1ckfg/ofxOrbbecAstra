@@ -1,5 +1,5 @@
 // This file is part of the Orbbec Astra SDK [https://orbbec3d.com]
-// Copyright (c) 2015-2017 Orbbec 3D
+// Copyright (c) 2015 Orbbec 3D
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -33,11 +33,11 @@ ASTRA_API_EX astra_status_t astra_frame_get_pointframe_with_subtype(astra_reader
                                                                              astra_pointframe_t* pointFrame);
 
 ASTRA_API_EX astra_status_t astra_pointframe_get_data_byte_length(astra_pointframe_t pointFrame,
-                                                                           uint32_t* byteLength);
+                                                                           size_t* byteLength);
 
 ASTRA_API_EX astra_status_t astra_pointframe_get_data_ptr(astra_pointframe_t pointFrame,
                                                                    astra_vector3f_t** data,
-                                                                   uint32_t* byteLength);
+                                                                   size_t* byteLength);
 
 ASTRA_API_EX astra_status_t astra_pointframe_copy_data(astra_pointframe_t pointFrame,
                                                                 astra_vector3f_t* data);

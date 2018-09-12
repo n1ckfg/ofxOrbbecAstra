@@ -1,5 +1,5 @@
 // This file is part of the Orbbec Astra SDK [https://orbbec3d.com]
-// Copyright (c) 2015-2017 Orbbec 3D
+// Copyright (c) 2015 Orbbec 3D
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 #ifndef STREAM_TYPES_H
 #define STREAM_TYPES_H
 
-#include "body_types.h"
 #include "depth_types.h"
 #include "color_types.h"
 #include "hand_types.h"
@@ -46,30 +45,14 @@ struct _astra_imageframe {
         void* data;
         uint64_t pad1;
     };
-};
+
+} PACK_STRUCT;
 
 struct _astra_handframe {
-    union {
-        astra_frame_t* frame;
-        uint64_t pad0;
-    };
+    astra_frame_t* frame;
     size_t handCount;
-    union {
-        astra_handpoint_t* handpoints;
-        uint64_t pad1;
-    };
-};
-
-struct _astra_bodyframe {
-    union {
-        astra_frame_t* frame;
-        uint64_t pad0;
-    };
-    astra_bodyframe_info_t info;
-    astra_bodymask_t bodyMask;
-    astra_floor_info_t floorInfo;
-    astra_body_list_t bodyList;
-};
+    astra_handpoint_t* handpoints;
+} PACK_STRUCT;
 
 #if defined(_MSC_VER)
 #pragma warning( push )
@@ -82,17 +65,12 @@ struct _astra_bodyframe {
 typedef struct _astra_imageframe_wrapper {
     _astra_imageframe frame;
     char frame_data[];
-} astra_imageframe_wrapper_t;
+} PACK_STRUCT astra_imageframe_wrapper_t;
 
 typedef struct _astra_handframe_wrapper {
     _astra_handframe frame;
     char frame_data[];
-} astra_handframe_wrapper_t;
-
-typedef struct _astra_bodyframe_wrapper {
-    _astra_bodyframe frame;
-    char frame_data[];
-} astra_bodyframe_wrapper_t;
+} PACK_STRUCT astra_handframe_wrapper_t;
 
 #if defined(_MSC_VER)
 #pragma warning( pop )

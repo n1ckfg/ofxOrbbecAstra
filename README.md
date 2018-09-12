@@ -19,7 +19,7 @@ Use the Project manager to create a project that uses this addon.
 
 ### Mac OS
 Use the Project manager to create a project that uses this addon.
-Edit the XCode project settings according to the two screnshots in the `docs` folder of this repository
+Edit the XCode project settings according to the two screenshots in the `docs` folder of this repository
 
 ## Support
 

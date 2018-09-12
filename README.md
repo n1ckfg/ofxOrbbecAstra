@@ -18,6 +18,7 @@ Copy all files from the `libs/astra/lib/linux64/` folder into the `bin\libs` fol
 Use the Project manager to create a project that uses this addon.
 
 ### Mac OS
+The MacOS version is in a different branch because the SDK is much older - https://github.com/pierrep/ofxOrbbecAstra/tree/MacOS
 Use the Project manager to create a project that uses this addon.
 Edit the XCode project settings according to the two screenshots in the `docs` folder of this repository
 

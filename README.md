@@ -28,7 +28,7 @@ Edit the XCode project settings according to the two screenshots in the `docs` f
 
 This has been tested with the following setup:
 
-- openFrameworks 0.9.8
+- openFrameworks 0.9.8 and openFrameworks 0.10.1
 - OSX (Does not support SDK greater than 0.5.0, therefore no native body tracking)
 - Windows 10 using Visual Studio
 - Ubuntu 16.04 and Ubuntu 18.04

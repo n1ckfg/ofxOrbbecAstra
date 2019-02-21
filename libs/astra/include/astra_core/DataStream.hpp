@@ -38,7 +38,16 @@ namespace astra {
             }
         }
 
-        bool is_available() { return connection_ != nullptr; }
+        bool is_available() 
+        {  
+            bool isAvailable = false;
+            if (connection_ == nullptr)
+            {
+                return isAvailable;
+            }
+            astra_stream_is_available(connection_, &isAvailable);
+            return isAvailable;
+        }
 
         void start()
         {

@@ -27,6 +27,9 @@ ASTRA_BEGIN_DECLS
 ASTRA_API_EX astra_status_t astra_reader_get_handstream(astra_reader_t reader,
                                                                  astra_handstream_t* handStream);
 
+ASTRA_API_EX astra_status_t astra_handstream_is_available(astra_handstream_t handStream,
+                                                          bool* isAvailable);
+
 ASTRA_API_EX astra_status_t astra_frame_get_handframe(astra_reader_frame_t readerFrame,
                                                                astra_handframe_t* handFrame);
 

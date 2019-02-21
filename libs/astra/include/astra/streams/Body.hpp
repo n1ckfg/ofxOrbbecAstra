@@ -104,6 +104,42 @@ namespace astra {
     };
 
     /*!
+      \ingroup CTypes
+      \brief Skeleton profile representing the set of joints to be tracked.
+    */
+    enum class SkeletonProfile : ::astra_skeleton_profile_t {
+        /*! All supported joints */
+        Full = 0,
+        /*! Upper body only */
+        UpperBody = 1,
+        /*! Only four basic joints: Head, MidSpine, LeftHand, RightHand */
+        Basic = 2
+    };
+
+    /*!
+      \ingroup CTypes
+      \brief Represents the body tracking configuration that trades-off
+      tracking accuracy, memory, and CPU usage.
+    */
+    enum class SkeletonOptimization : ::astra_skeleton_optimization_t {
+        Optimization1 = 1,
+        /*! Configuration that minimizes memory usage at a cost of lower tracking accuracy */
+        MinimizeMemory = 2,
+        Optimization2 = 2,
+        Optimization3 = 3,
+        Optimization4 = 4,
+        /*! Configuration that balances accuracy with lower memory and CPU usage */
+        Balanced = 5,
+        Optimization5 = 5,
+        Optimization6 = 6,
+        Optimization7 = 7,
+        Optimization8 = 8,
+        Optimization9 = 9,
+        /*! Configuration that produces the best tracking accuracy */
+        BestAccuracy = 9,
+    };
+
+    /*!
       \brief Joint status enumeration
     */
     enum class JointStatus : ::astra_joint_status_t
@@ -532,6 +568,32 @@ namespace astra {
         {
             astra_bodystream_set_default_body_features(bodyStream_,
                                                        static_cast<astra_body_tracking_feature_flags_t>(features));
+        }
+
+        SkeletonProfile get_skeleton_profile()
+        {
+            astra_skeleton_profile_t skeletonProfileState = ASTRA_SKELETON_PROFILE_FULL;
+            astra_bodystream_get_skeleton_profile(bodyStream_, &skeletonProfileState);
+            return static_cast<SkeletonProfile>(skeletonProfileState);
+        }
+
+        void set_skeleton_profile(SkeletonProfile skeletonProfile)
+        {
+            astra_bodystream_set_skeleton_profile(bodyStream_,
+                                                  static_cast<astra_skeleton_profile_t>(skeletonProfile));
+        }
+
+        SkeletonOptimization get_skeleton_optimization()
+        {
+            astra_skeleton_optimization_t skeletonOptimization = ASTRA_SKELETON_OPTIMIZATION_BEST_ACCURACY;
+            astra_bodystream_get_skeleton_optimization(bodyStream_, &skeletonOptimization);
+            return static_cast<SkeletonOptimization>(skeletonOptimization);
+        }
+
+        void set_skeleton_optimization(SkeletonOptimization skeletonOptimization)
+        {
+            astra_bodystream_set_skeleton_optimization(bodyStream_,
+                                                       static_cast<astra_skeleton_optimization_t>(skeletonOptimization));
         }
 
         static const astra_stream_type_t id = ASTRA_STREAM_BODY;

@@ -39,13 +39,13 @@ namespace astra {
             ::astra_rgb_pixel_t::b = b;
         }
     };
-    struct RGBAPixel : public astra_rgba_pixel_t
+    struct RgbaPixel : public astra_rgba_pixel_t
     {
-        RGBAPixel()
-                : RGBAPixel(0, 0,0,0)
+        RgbaPixel()
+            : RgbaPixel(0, 0,0,0)
         {}
 
-        RGBAPixel(std::uint8_t r, std::uint8_t g, std::uint8_t b,std::uint8_t alpha)
+        RgbaPixel(std::uint8_t r, std::uint8_t g, std::uint8_t b, std::uint8_t alpha)
         {
             ::astra_rgba_pixel_t::r = r;
             ::astra_rgba_pixel_t::g = g;
@@ -53,6 +53,9 @@ namespace astra {
             ::astra_rgba_pixel_t::alpha = alpha;
         }
     };
+
+    // DEPRECATED
+    typedef RgbaPixel RGBAPixel;
 
     class ImageStreamMode : private ::astra_imagestream_mode_t
     {

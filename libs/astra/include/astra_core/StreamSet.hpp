@@ -48,7 +48,25 @@ namespace astra {
             return *this;
         }
 
+        std::string uri()
+        {
+            char uri[ASTRA_STREAMSET_URI_MAX_LENGTH];
+            astra_streamset_get_uri(setRef_->connection_handle(), uri, ASTRA_STREAMSET_URI_MAX_LENGTH);
+            return std::string(uri);
+        }
+
         bool is_valid() { return setRef_ != nullptr; }
+
+        bool is_available()
+        {
+            bool isAvailable = false;
+            if (setRef_ == nullptr || setRef_->connection_handle() == nullptr)
+            {
+                return isAvailable;
+            }
+            astra_streamset_is_available(setRef_->connection_handle(), &isAvailable);
+            return isAvailable;
+        }
 
         inline StreamReader create_reader();
         astra_streamsetconnection_t get_handle() const { return setRef_->connection_handle(); }

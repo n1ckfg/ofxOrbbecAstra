@@ -25,6 +25,9 @@ ASTRA_BEGIN_DECLS
 ASTRA_API_EX astra_status_t astra_reader_get_colorizedbodystream(astra_reader_t reader,
                                                                   astra_colorizedbodystream_t* colorizedbodyStream);
 
+ASTRA_API_EX astra_status_t astra_colorizedbodystream_is_available(astra_colorizedbodystream_t colorizedbodyStream,
+                                                                   bool* isAvailable);
+
 ASTRA_API_EX astra_status_t astra_frame_get_colorizedbodyframe(astra_reader_frame_t readerFrame,
                                                                 astra_colorizedbodyframe_t* colorizedbodyFrame);
 

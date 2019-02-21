@@ -42,7 +42,7 @@ namespace astra {
 		astra_colorizedbodystream_t colorizedbodyStream_;
     };
 
-    class ColorizedBodyFrame : public ImageFrame<RGBAPixel, ASTRA_STREAM_COLORIZED_BODY>
+    class ColorizedBodyFrame : public ImageFrame<RgbaPixel, ASTRA_STREAM_COLORIZED_BODY>
     {
     public:
 		ColorizedBodyFrame(astra_imageframe_t frame)

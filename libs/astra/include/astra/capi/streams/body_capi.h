@@ -20,11 +20,15 @@
 #include <astra_core/capi/astra_defines.h>
 #include <astra_core/capi/astra_types.h>
 #include "body_types.h"
+#include <stdbool.h>
 
 ASTRA_BEGIN_DECLS
 
 ASTRA_API_EX astra_status_t astra_reader_get_bodystream(astra_reader_t reader,
                                                         astra_bodystream_t* bodyStream);
+
+ASTRA_API_EX astra_status_t astra_bodystream_is_available(astra_bodystream_t bodyStream,
+                                                          bool* isAvailable);
 
 ASTRA_API_EX astra_status_t astra_bodystream_get_body_features(astra_bodystream_t bodyStream,
                                                                astra_body_id_t id,
@@ -39,6 +43,18 @@ ASTRA_API_EX astra_status_t astra_bodystream_get_default_body_features(astra_bod
 
 ASTRA_API_EX astra_status_t astra_bodystream_set_default_body_features(astra_bodystream_t bodyStream,
                                                                        astra_body_tracking_feature_flags_t features);
+
+ASTRA_API_EX astra_status_t astra_bodystream_get_skeleton_profile(astra_bodystream_t bodyStream,
+                                                                  astra_skeleton_profile_t* skeletonProfile);
+
+ASTRA_API_EX astra_status_t astra_bodystream_set_skeleton_profile(astra_bodystream_t bodyStream,
+                                                                  astra_skeleton_profile_t skeletonProfile);
+
+ASTRA_API_EX astra_status_t astra_bodystream_get_skeleton_optimization(astra_bodystream_t bodyStream,
+                                                                       astra_skeleton_optimization_t* skeletonOptimization);
+
+ASTRA_API_EX astra_status_t astra_bodystream_set_skeleton_optimization(astra_bodystream_t bodyStream,
+                                                                       astra_skeleton_optimization_t skeletonOptimization);
 
 ASTRA_API_EX astra_status_t astra_frame_get_bodyframe(astra_reader_frame_t readerFrame,
                                                       astra_bodyframe_t* bodyFrame);

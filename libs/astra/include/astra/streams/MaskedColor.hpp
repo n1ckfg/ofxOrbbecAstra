@@ -42,7 +42,7 @@ namespace astra {
         astra_maskedcolorstream_t maskedcolorStream_;
     };
 
-    class MaskedColorFrame : public ImageFrame<RGBAPixel, ASTRA_STREAM_MASKED_COLOR>
+    class MaskedColorFrame : public ImageFrame<RgbaPixel, ASTRA_STREAM_MASKED_COLOR>
     {
     public:
         MaskedColorFrame(astra_imageframe_t frame)

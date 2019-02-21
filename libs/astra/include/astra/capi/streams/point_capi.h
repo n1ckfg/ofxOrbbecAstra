@@ -25,6 +25,9 @@ ASTRA_BEGIN_DECLS
 ASTRA_API_EX astra_status_t astra_reader_get_pointstream(astra_reader_t reader,
                                                                   astra_pointstream_t* pointStream);
 
+ASTRA_API_EX astra_status_t astra_pointstream_is_available(astra_pointstream_t pointStream,
+                                                           bool* isAvailable);
+
 ASTRA_API_EX astra_status_t astra_frame_get_pointframe(astra_reader_frame_t readerFrame,
                                                                 astra_pointframe_t* pointFrame);
 

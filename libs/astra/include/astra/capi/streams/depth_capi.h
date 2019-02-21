@@ -22,6 +22,8 @@
 #include <astra/capi/streams/depth_types.h>
 #include <stdbool.h>
 
+#define ASTRA_SERIAL_NUMBER_MAX 256
+
 ASTRA_BEGIN_DECLS
 
 ASTRA_API_EX astra_status_t astra_convert_depth_to_world(astra_depthstream_t depthStream,
@@ -34,6 +36,9 @@ ASTRA_API_EX astra_status_t astra_convert_world_to_depth(astra_depthstream_t dep
 
 ASTRA_API_EX astra_status_t astra_reader_get_depthstream(astra_reader_t reader,
                                                          astra_depthstream_t* depthStream);
+
+ASTRA_API_EX astra_status_t astra_depthstream_is_available(astra_depthstream_t depthStream,
+                                                           bool* isAvailable);
 
 ASTRA_API_EX astra_status_t astra_depthstream_get_depth_to_world_data(astra_depthstream_t depthStream,
                                                                       astra_conversion_cache_t* conversionData);

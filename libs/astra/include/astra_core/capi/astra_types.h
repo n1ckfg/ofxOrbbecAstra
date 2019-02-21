@@ -20,6 +20,8 @@
 #include <stdint.h>
 #include <stddef.h>
 
+const uint32_t ASTRA_STREAMSET_URI_MAX_LENGTH = 256;
+
 const uint8_t ASTRA_MAX_READER_STREAMS = 16;
 
 const int ASTRA_TIMEOUT_FOREVER = -1;
@@ -114,11 +116,11 @@ typedef uint32_t astra_event_id;
 #endif
 
 #ifndef ASTRA_NULL
-#  ifdef NULL
-#    define ASTRA_NULL NULL
-#  else
-#    define ASTRA_NULL 0
-#  endif
+    #ifdef NULL
+        #define ASTRA_NULL NULL
+    #else
+        #define ASTRA_NULL 0
+    #endif
 #endif
 
 typedef int8_t astra_bool_t;

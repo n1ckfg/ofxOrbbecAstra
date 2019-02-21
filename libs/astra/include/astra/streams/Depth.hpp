@@ -68,18 +68,18 @@ namespace astra {
         }
 
         void convert_depth_to_world(float  depthX, float  depthY, float  depthZ,
-                                    float* worldX, float* worldY, float* worldZ) const
+                                    float& worldX, float& worldY, float& worldZ) const
         {
             astra_convert_depth_to_world(depthStream_, depthX, depthY, depthZ,
-                                         worldX, worldY, worldZ);
+                                         &worldX, &worldY, &worldZ);
         }
 
         void convert_world_to_depth(float  worldX, float  worldY, float  worldZ,
-                                    float* depthX, float* depthY, float* depthZ) const
+                                    float& depthX, float& depthY, float& depthZ) const
         {
             astra_convert_world_to_depth(depthStream_,
                                          worldX, worldY, worldZ,
-                                         depthX, depthY, depthZ);
+                                         &depthX, &depthY, &depthZ);
         }
 
     private:
@@ -118,9 +118,16 @@ namespace astra {
             astra_depthstream_set_registration(depthStream_, enable);
         }
 
-        void serial_number(char *serialnumber, uint32_t length)
+        void serial_number(char* serialnumber, uint32_t length) const
         {
             astra_depthstream_get_serialnumber(depthStream_, serialnumber, length);
+        }
+
+        std::string serial_number() const
+        {
+            char serialNumber[ASTRA_SERIAL_NUMBER_MAX];
+            astra_depthstream_get_serialnumber(depthStream_, serialNumber, sizeof(serialNumber) / sizeof(char));
+            return std::string(serialNumber);
         }
 
         std::uint32_t chip_id() const

@@ -14,6 +14,9 @@ Add this line to your qtCreator .qbs file: `cpp.rpaths: ["./libs"]`
 Create the `bin\libs` folder if it does not exist.
 Copy all files from the `libs/astra/lib/linux64/` folder into the `bin\libs` folder. 
 
+If using Ubuntu 18.04, make sure that you install libpng12. This can be done by installing the .deb file here:
+https://packages.ubuntu.com/xenial/amd64/libpng12-0/download
+
 ### Windows
 Use the Project manager to create a project that uses this addon.
 
@@ -28,7 +31,7 @@ This has been tested with the following setup:
 - openFrameworks 0.9.8
 - OSX (Does not support SDK greater than 0.5.0, therefore no native body tracking)
 - Windows 10 using Visual Studio
-- Ubuntu 16.04
+- Ubuntu 16.04 and Ubuntu 18.04
 - Orbec Astra camera
 
 ## More Sample Applications

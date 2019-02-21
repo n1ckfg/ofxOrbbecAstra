@@ -214,6 +214,60 @@ typedef uint32_t astra_body_tracking_feature_flags_t;
 
 /*!
   \ingroup CTypes
+  \brief Skeleton profile representing the set of joints to be tracked.
+*/
+typedef enum _astra_skeleton_profile {
+    /*! All supported joints */
+    ASTRA_SKELETON_PROFILE_FULL = 0,
+    /*! Upper body only */
+    ASTRA_SKELETON_PROFILE_UPPER_BODY = 1,
+    /*! Only four basic joints: Head, MidSpine, LeftHand, RightHand */
+    ASTRA_SKELETON_PROFILE_BASIC = 2
+} astra_skeleton_profile_v;
+
+/*!
+  \ingroup CTypes
+  \brief Skeleton profile representing the set of joints to be tracked.
+
+  \see astra_skeleton_profile_v for possible values;
+*/
+typedef uint32_t astra_skeleton_profile_t;
+
+/*!
+  \ingroup CTypes
+  \brief Represents the body tracking configuration that trades-off
+  tracking accuracy, memory, and CPU usage.
+*/
+typedef enum _astra_skeleton_optimization {
+    ASTRA_SKELETON_OPTIMIZATION_1 = 1,
+    /*! Configuration that minimizes memory usage at a cost of lower tracking accuracy */
+    ASTRA_SKELETON_OPTIMIZATION_MINIMIZE_MEMORY = 2,
+    ASTRA_SKELETON_OPTIMIZATION_2 = 2,
+    ASTRA_SKELETON_OPTIMIZATION_3 = 3,
+    ASTRA_SKELETON_OPTIMIZATION_4 = 4,
+    /*! Configuration that balances accuracy with lower memory and CPU usage */
+    ASTRA_SKELETON_OPTIMIZATION_BALANCED = 5,
+    ASTRA_SKELETON_OPTIMIZATION_5 = 5,
+    ASTRA_SKELETON_OPTIMIZATION_6 = 6,
+    ASTRA_SKELETON_OPTIMIZATION_7 = 7,
+    ASTRA_SKELETON_OPTIMIZATION_8 = 8,
+    ASTRA_SKELETON_OPTIMIZATION_9 = 9,
+    /*! Configuration that produces the best tracking accuracy */
+    ASTRA_SKELETON_OPTIMIZATION_BEST_ACCURACY = 9,
+} astra_skeleton_optimization_v;
+
+
+/*!
+  \ingroup CTypes
+  \brief Represents the body tracking configuration that trades-off
+  tracking accuracy, memory, and CPU usage.
+
+  \see astra_skeleton_optimization_v for possible values;
+*/
+typedef uint32_t astra_skeleton_optimization_t;
+
+/*!
+  \ingroup CTypes
   \brief Body identifier
 */
 typedef uint8_t astra_body_id_t;

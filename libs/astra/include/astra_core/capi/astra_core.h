@@ -5,6 +5,7 @@
 #include "astra_defines.h"
 #include "astra_types.h"
 #include "astra_core_version.h"
+#include <stdbool.h>
 
 ASTRA_BEGIN_DECLS
 
@@ -15,10 +16,17 @@ ASTRA_API astra_status_t astra_notify_plugin_event(astra_event_id id,
                                                    const void* data,
                                                    uint32_t dataSize);
 
+ASTRA_API astra_status_t astra_streamset_is_available(astra_streamsetconnection_t connection,
+                                                      bool* isAvailable);
+
 ASTRA_API astra_status_t astra_streamset_open(const char* connectionString,
                                               astra_streamsetconnection_t* streamSet);
 
 ASTRA_API astra_status_t astra_streamset_close(astra_streamsetconnection_t* streamSet);
+
+ASTRA_API astra_status_t astra_streamset_get_uri(astra_streamsetconnection_t connection,
+                                                 char* uri,
+                                                 int32_t size);
 
 ASTRA_API astra_status_t astra_reader_create(astra_streamsetconnection_t streamSet,
                                              astra_reader_t* reader);
@@ -33,9 +41,15 @@ ASTRA_API astra_status_t astra_reader_get_stream(astra_reader_t reader,
 ASTRA_API astra_status_t astra_stream_get_description(astra_streamconnection_t connection,
                                                       astra_stream_desc_t* description);
 
+ASTRA_API astra_status_t astra_stream_is_available(astra_streamconnection_t connection,
+                                                   bool* isAvailable);
+
 ASTRA_API astra_status_t astra_stream_start(astra_streamconnection_t connection);
 
 ASTRA_API astra_status_t astra_stream_stop(astra_streamconnection_t connection);
+
+ASTRA_API astra_status_t astra_reader_has_new_frame(astra_reader_t reader,
+                                                    bool* hasNewFrame);
 
 ASTRA_API astra_status_t astra_reader_open_frame(astra_reader_t reader,
                                                  int timeoutMillis,

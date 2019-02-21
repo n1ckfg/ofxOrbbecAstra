@@ -26,6 +26,9 @@ ASTRA_BEGIN_DECLS
 ASTRA_API_EX astra_status_t astra_reader_get_colorstream(astra_reader_t reader,
                                                          astra_colorstream_t* colorStream);
 
+ASTRA_API_EX astra_status_t astra_colorstream_is_available(astra_colorstream_t colorStream,
+                                                           bool* isAvailable);
+
 ASTRA_API_EX astra_status_t astra_colorstream_get_usb_info(astra_colorstream_t colorStream,
                                                            astra_usb_info_t* usbInfo);
 

@@ -27,6 +27,9 @@ ASTRA_BEGIN_DECLS
 ASTRA_API_EX astra_status_t astra_reader_get_infraredstream(astra_reader_t reader,
                                                             astra_infraredstream_t* infraredstream);
 
+ASTRA_API_EX astra_status_t astra_infraredstream_is_available(astra_infraredstream_t infraredStream,
+                                                              bool* isAvailable);
+
 ASTRA_API_EX astra_status_t astra_infraredstream_get_hfov(astra_infraredstream_t infraredstream,
                                                           float* hFov);
 

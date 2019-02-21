@@ -14,7 +14,7 @@ Add this line to your qtCreator .qbs file: `cpp.rpaths: ["./libs"]`
 Create the `bin\libs` folder if it does not exist.
 Copy all files from the `libs/astra/lib/linux64/` folder into the `bin\libs` folder. 
 
-If using Ubuntu 18.04, make sure that you install libpng12. This can be done by installing the .deb file here:
+Make sure that you have libpng12 installed or the body tracking won't work. If you are on Ubuntu 18.04 this can be done by installing the .deb file here:
 https://packages.ubuntu.com/xenial/amd64/libpng12-0/download
 
 ### Windows

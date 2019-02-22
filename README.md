@@ -2,7 +2,7 @@
 
 openFrameworks addon for using the [Orbbec Astra SDK](https://orbbec3d.com/develop/). 
 
-Currently using the 2.0.9 Beta3d SDK
+Currently using the 2.0.14 SDK
 
 ## Setup
 

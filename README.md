@@ -30,7 +30,7 @@ This has been tested with the following setup:
 
 - openFrameworks 0.9.8 and openFrameworks 0.10.1
 - OSX (Does not support SDK greater than 0.5.0, therefore no native body tracking)
-- Windows 10 using Visual Studio
+- Windows 10 using Visual Studio 2015
 - Ubuntu 16.04 and Ubuntu 18.04
 - Orbec Astra camera
 

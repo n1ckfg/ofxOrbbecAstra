@@ -44,6 +44,7 @@ public:
 
 #ifndef TARGET_OSX
     ofVec2f getJointPosition(int body_id, int joint_id);
+    ofVec2f getNomalisedJointPosition(int body_id, int joint_id);
     vector<astra::Joint>& getJointPositions(int body_id);
     int getNumBodies();
     int getNumJoints(int body_id);
@@ -63,6 +64,9 @@ public:
     map<int32_t,ofVec2f>& getHandsDepth();
     map<int32_t,ofVec3f>& getHandsWorld();
 
+    float getCameraWidth() {return cameraWidth;}
+    float getCameraHeight() {return cameraHeight;}
+
 protected:
 
 	virtual void on_frame_ready(astra::StreamReader& reader,
@@ -73,8 +77,8 @@ protected:
 	astra::StreamSet streamset;
 	astra::StreamReader reader;
 
-	int width;
-	int height;
+    int cameraWidth;
+    int cameraHeight;
 	bool bSetup;
 	bool bIsFrameNew;
 	bool bDepthImageEnabled;

@@ -8,9 +8,10 @@
 
 #include "ofxOrbbecAstra.h"
 
+
 ofxOrbbecAstra::ofxOrbbecAstra() {
-	width = 640;
-	height = 480;
+    cameraWidth = 640;
+    cameraHeight = 480;
 	nearClip = 300;
 	farClip = 1800;
 	maxDepth = 8000;
@@ -21,7 +22,11 @@ ofxOrbbecAstra::ofxOrbbecAstra() {
 }
 
 ofxOrbbecAstra::~ofxOrbbecAstra() {
-	astra::terminate();
+    if(reader.is_valid()) {
+
+        reader.remove_listener(*this);
+        astra::terminate();
+    }
 }
 
 void ofxOrbbecAstra::setLicenseString(const string& license) {
@@ -35,10 +40,10 @@ void ofxOrbbecAstra::setup() {
 }
 
 void ofxOrbbecAstra::setup(const string& uri) {
-	colorImage.allocate(width, height, OF_IMAGE_COLOR);
-	depthImage.allocate(width, height, OF_IMAGE_GRAYSCALE);
-	depthPixels.allocate(width, height, OF_IMAGE_GRAYSCALE);
-	cachedCoords.resize(width * height);
+    colorImage.allocate(cameraWidth, cameraHeight, OF_IMAGE_COLOR);
+    depthImage.allocate(cameraWidth, cameraHeight, OF_IMAGE_GRAYSCALE);
+    depthPixels.allocate(cameraWidth, cameraHeight, OF_IMAGE_GRAYSCALE);
+    cachedCoords.resize(cameraWidth * cameraHeight);
 	updateDepthLookupTable();
 
 	astra_status_t status = astra::initialize();
@@ -85,13 +90,20 @@ void ofxOrbbecAstra::initColorStream() {
 		return;
 	}
 
-	astra::ImageStreamMode colorMode;
-	auto colorStream = reader.stream<astra::ColorStream>();
+    astra::ColorStream colorStream = reader.stream<astra::ColorStream>();
+    bool isAvailable = colorStream.is_available();
+    if(!isAvailable) {
+        ofLogWarning("ofxOrbbecAstra") << "Colour stream is not available. Check if sensor is plugged in.";
+        return;
+    }
 
-	colorMode.set_width(width);
-	colorMode.set_height(height);
+	astra::ImageStreamMode colorMode;
+
+    colorMode.set_width(cameraWidth);
+    colorMode.set_height(cameraHeight);
 	colorMode.set_pixel_format(astra_pixel_formats::ASTRA_PIXEL_FORMAT_RGB888);
 	colorMode.set_fps(30);
+    ofImage colorImage;
 
 	colorStream.set_mode(colorMode);
 	colorStream.start();
@@ -103,11 +115,17 @@ void ofxOrbbecAstra::initDepthStream() {
 		return;
 	}
 
-	astra::ImageStreamMode depthMode;
-	auto depthStream = reader.stream<astra::DepthStream>();
+    astra::DepthStream depthStream = reader.stream<astra::DepthStream>();
+    bool isAvailable = depthStream.is_available();
+    if(!isAvailable) {
+        ofLogWarning("ofxOrbbecAstra") << "Depth stream is not available. Check if sensor is plugged in.";
+        return;
+    }
 
-	depthMode.set_width(width);
-	depthMode.set_height(height);
+	astra::ImageStreamMode depthMode;
+
+    depthMode.set_width(cameraWidth);
+    depthMode.set_height(cameraHeight);
 	depthMode.set_pixel_format(astra_pixel_formats::ASTRA_PIXEL_FORMAT_DEPTH_MM);
 	depthMode.set_fps(30);
 
@@ -141,6 +159,14 @@ void ofxOrbbecAstra::initBodyStream() {
     }
 #ifndef TARGET_OSX
    reader.stream<astra::BodyStream>().start();
+   astra::SkeletonOptimization optimization = reader.stream<astra::BodyStream>().get_skeleton_optimization();
+   ofLogNotice() << "Skeleton Optimization (1-9) = " << static_cast<int>(optimization);
+
+   astra::SkeletonProfile profile = reader.stream<astra::BodyStream>().get_skeleton_profile();
+   if(profile == astra::SkeletonProfile::Basic) ofLogNotice() << "Skeleton Profile = Only four basic joints: Head, MidSpine, LeftHand, RightHand";
+   else if(profile == astra::SkeletonProfile::UpperBody) ofLogNotice() << "Skeleton Profile = Upper body only";
+   else if(profile == astra::SkeletonProfile::Full) ofLogNotice() << "Skeleton Profile = All supported joints";
+
 #endif
 }
 
@@ -151,7 +177,7 @@ void ofxOrbbecAstra::initVideoGrabber(int deviceID) {
 
 	grabber = make_shared<ofVideoGrabber>();
 	grabber->setDeviceID(deviceID);
-	grabber->setup(width, height);
+    grabber->setup(cameraWidth, cameraHeight);
 }
 
 void ofxOrbbecAstra::update(){
@@ -174,14 +200,14 @@ void ofxOrbbecAstra::update(){
 }
 
 void ofxOrbbecAstra::draw(float x, float y, float w, float h){
-	if (!w) w = width;
-	if (!h) h = height;
+    if (!w) w = cameraWidth;
+    if (!h) h = cameraHeight;
 	colorImage.draw(x, y, w, h);
 }
 
 void ofxOrbbecAstra::drawDepth(float x, float y, float w, float h){
-	if (!w) w = width;
-	if (!h) h = height;
+    if (!w) w = cameraWidth;
+    if (!h) h = cameraHeight;
 	depthImage.draw(x, y, w, h);
 }
 
@@ -195,7 +221,7 @@ void ofxOrbbecAstra::on_frame_ready(astra::StreamReader& reader,
 	bIsFrameNew = true;
 
 	auto colorFrame = frame.get<astra::ColorFrame>();
-	auto depthFrame = frame.get<astra::DepthFrame>();
+    auto depthFrame = frame.get<astra::DepthFrame>();
 	auto pointFrame = frame.get<astra::PointFrame>();
 	auto handFrame = frame.get<astra::HandFrame>();
 #ifndef TARGET_OSX
@@ -288,7 +314,7 @@ void ofxOrbbecAstra::updateDepthLookupTable() {
 }
 
 ofVec3f ofxOrbbecAstra::getWorldCoordinateAt(int x, int y) {
-	return cachedCoords[int(y) * width + int(x)];
+    return cachedCoords[int(y) * cameraWidth + int(x)];
 }
 
 #ifndef TARGET_OSX
@@ -307,8 +333,12 @@ vector<astra::Joint>& ofxOrbbecAstra::getJointPositions(int body_id) {
     return joints.at(body_id);
 }
 
+ofVec2f ofxOrbbecAstra::getNomalisedJointPosition(int body_id, int joint_id) {
+    return ofVec2f(joints[body_id][joint_id].depth_position().x/cameraWidth,joints[body_id][joint_id].depth_position().y/cameraHeight);
+}
+
 ofVec2f ofxOrbbecAstra::getJointPosition(int body_id, int joint_id) {
-    return ofVec2f(joints[body_id][joint_id].depth_position().x,joints[body_id][joint_id].depth_position().y);
+    return ofVec2f(joints[body_id][joint_id].depth_position().x/cameraWidth*ofGetWidth(),joints[body_id][joint_id].depth_position().y/cameraHeight*ofGetHeight());
 }
 
 astra::JointType ofxOrbbecAstra::getJointType(int body_id, int joint_id) {

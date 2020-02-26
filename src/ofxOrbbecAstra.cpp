@@ -297,6 +297,18 @@ void ofxOrbbecAstra::on_frame_ready(astra::StreamReader& reader,
     } else {
         numBodies = 0;
     }
+
+    auto bodyOrientation = reader.stream<astra::BodyStream>().get_body_orientation();
+    if(bodyOrientation == astra::BodyOrientation::LEFT) {
+        ofLogVerbose() << "Body Orientation: LEFT";
+    } else if(bodyOrientation == astra::BodyOrientation::RIGHT) {
+        ofLogVerbose() << "Body Orientation: RIGHT";
+    } else if(bodyOrientation == astra::BodyOrientation::TOP) {
+        ofLogVerbose() << "Body Orientation: TOP";
+    } else {
+        ofLogVerbose() <<"Unknown Body Orientation....";
+    }
+
 #endif
 }
 

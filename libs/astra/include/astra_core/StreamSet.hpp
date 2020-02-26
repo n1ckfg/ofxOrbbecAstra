@@ -26,6 +26,12 @@ namespace astra {
 
     static const char* ASTRA_DEFAULT_DEVICE_URI = "device/default";
 
+    /*!
+      \ingroup cpp_core_api_ref
+      \brief Stream Set Class
+
+      \details Stream Set \ref concepts_streamset.
+     */
     class StreamSet
     {
     public:
@@ -36,6 +42,7 @@ namespace astra {
         StreamSet(const char* uri)
         {
             setRef_ = std::make_shared<StreamSetRef>(uri);
+            setRef_->connect();
         }
 
         StreamSet(const StreamSet& other)

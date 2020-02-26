@@ -35,6 +35,10 @@ typedef int32_t astra_frame_index_t;
 
 const astra_stream_subtype_t DEFAULT_SUBTYPE = 0;
 
+#ifdef __ANDROID__
+const astra_stream_subtype_t COLOR_NV21_SUBTYPE = 1;
+#endif
+
 typedef struct {
     astra_stream_type_t type;
     astra_stream_subtype_t subtype;
@@ -102,7 +106,8 @@ typedef enum {
 typedef enum {
     ASTRA_CHIP_ID_UNKNOWN = 0,
     ASTRA_CHIP_ID_MX400 = 1,
-    ASTRA_CHIP_ID_MX6000 = 2
+    ASTRA_CHIP_ID_MX6000 = 2,
+    ASTRA_CHIP_ID_DUAL_MX6000 = 3
 } astra_chip_id_t;
 
 typedef uint32_t astra_event_id;

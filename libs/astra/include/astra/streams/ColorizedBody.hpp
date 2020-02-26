@@ -24,6 +24,17 @@
 
 namespace astra {
 
+    /*!
+      \defgroup cpp_colorbody_api_ref colorized body stream apis
+      \ingroup cpp_high_api_ref
+      @{
+     */
+
+    /*!
+      \brief A Colorized Body Stream
+
+      \details A Colorized Body Stream
+     */
     class ColorizedBodyStream : public DataStream
     {
     public:
@@ -42,6 +53,11 @@ namespace astra {
 		astra_colorizedbodystream_t colorizedbodyStream_;
     };
 
+    /*!
+      \brief A Colorized Body Frame
+
+      \details A Colorized Body Frame
+     */
     class ColorizedBodyFrame : public ImageFrame<RgbaPixel, ASTRA_STREAM_COLORIZED_BODY>
     {
     public:
@@ -49,6 +65,7 @@ namespace astra {
             : ImageFrame(frame, ASTRA_PIXEL_FORMAT_RGBA)
         {}
     };
+    /** @} */
 }
 
 #endif // ASTRA_COLORIZEDBODY_HPP

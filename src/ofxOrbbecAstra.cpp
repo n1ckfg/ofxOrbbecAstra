@@ -3,7 +3,7 @@
 //  ofxOrbbecAstra
 //
 //  Created by Matt Felsen on 10/24/15.
-//
+//  Updated by Pierre Proske in 2018-2019
 //
 
 #include "ofxOrbbecAstra.h"
@@ -26,6 +26,7 @@ ofxOrbbecAstra::~ofxOrbbecAstra() {
 
         reader.remove_listener(*this);
         astra::terminate();
+        delete streamset;
     }
 }
 
@@ -58,8 +59,9 @@ void ofxOrbbecAstra::setup(const string& uri) {
 	}
 
 
-	streamset = astra::StreamSet(uri.c_str());
-	reader = astra::StreamReader(streamset.create_reader());
+    streamset = new astra::StreamSet();
+    astra::StreamSet(uri.c_str());
+    reader = astra::StreamReader(streamset->create_reader());
 
 	bSetup = true;
 	reader.add_listener(*this);

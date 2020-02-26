@@ -3,7 +3,7 @@
 //  ofxOrbbecAstra
 //
 //  Created by Matt Felsen on 10/24/15.
-//
+//	Updated by Pierre Proske in 2018-2019
 //
 
 #pragma once
@@ -74,8 +74,8 @@ protected:
 
 	void updateDepthLookupTable();
 
-	astra::StreamSet streamset;
-	astra::StreamReader reader;
+    astra::StreamSet *streamset;
+    astra::StreamReader reader;
 
     int cameraWidth;
     int cameraHeight;

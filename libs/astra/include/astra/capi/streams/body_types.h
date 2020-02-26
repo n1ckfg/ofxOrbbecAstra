@@ -266,6 +266,20 @@ typedef enum _astra_skeleton_optimization {
 */
 typedef uint32_t astra_skeleton_optimization_t;
 
+typedef enum _astra_body_orientation {
+    ASTRA_BODY_ORIENTATION_TOP = 0,
+    ASTRA_BODY_ORIENTATION_LEFT = 1,
+    ASTRA_BODY_ORIENTATION_RIGHT = 2,
+} astra_body_orientation_v;
+
+/*!
+  \ingroup CTypes
+  \brief the orientation of people's heads in depth image.
+
+  \see astra_body_orientation_v for possible values;
+*/
+typedef uint32_t astra_body_orientation_t;
+
 /*!
   \ingroup CTypes
   \brief Body identifier
